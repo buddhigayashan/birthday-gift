@@ -1,77 +1,301 @@
-import React from "react";
-import { Mail } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Mail, Play, Pause, Volume2, VolumeX } from "lucide-react";
 import Navigation from "./Navigation";
 
-const LoveLetter = ({ loginData, navigateTo }) => (
-  <div className="w-screen confetti-bg pt-20 pb-20 min-h-[calc(100vh-8rem)]">
-    <Navigation navigateTo={navigateTo} />
-    <div className="max-w-4xl mx-auto px-4">
-      <div className="bg-white/20 backdrop-blur-xl rounded-3xl p-6 sm:p-12 shadow-2xl border-2 border-rose-300/50">
-        <div className="text-center mb-6 sm:mb-8">
-          <Mail className="mx-auto text-rose-500 animate-pulse" size={40} />
-          <h1 className="text-3xl sm:text-6xl font-extrabold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent mb-4 sm:mb-6 animate-fade-in">
-            💌 My Heart’s Letter 💌
+const LoveLetter = ({ loginData, navigateTo }) => {
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+
+  // Auto-play music when component mounts
+  useEffect(() => {
+    const playMusic = async () => {
+      if (audioRef.current) {
+        try {
+          audioRef.current.volume = 0.5; // Set volume to 50%
+          await audioRef.current.play();
+          setIsPlaying(true);
+        } catch (error) {
+          console.warn("Autoplay failed:", error);
+          // Autoplay failed, user will need to click play button
+        }
+      }
+    };
+
+    // Small delay to ensure component is fully mounted
+    const timer = setTimeout(playMusic, 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Toggle play/pause
+  const togglePlayPause = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        audioRef.current
+          .play()
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch((error) => {
+            console.warn("Play failed:", error);
+          });
+      }
+    }
+  };
+
+  // Toggle mute/unmute
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  // Floating hearts animation elements
+  const floatingHearts = [...Array(10)].map((_, i) => (
+    <motion.div
+      key={i}
+      className="absolute w-6 h-6 bg-pink-400 rounded-full opacity-40"
+      style={{
+        left: `${Math.random() * 100}vw`,
+        top: `${Math.random() * 100}vh`,
+      }}
+      animate={{
+        y: [-10, 10, -10],
+        x: [0, 5, -5, 0],
+        rotate: [0, 20, -20, 0],
+      }}
+      transition={{
+        repeat: Infinity,
+        duration: 6 + Math.random() * 3,
+        ease: "easeInOut",
+        delay: i * 0.5,
+      }}
+    />
+  ));
+
+  // Rose petals animation elements
+  const rosePetals = [...Array(15)].map((_, i) => (
+    <img
+      key={`petal-${i}`}
+      src="/petal.png"
+      alt="rose petal"
+      className="petal absolute w-6 h-6 pointer-events-none"
+      style={{
+        left: `${Math.random() * 100}vw`,
+        animationDuration: `${5 + Math.random() * 5}s`,
+        animationDelay: `${Math.random() * 5}s`,
+        top: `-${Math.random() * 10}vh`, // start slightly above viewport
+      }}
+    />
+  ));
+
+  // Handler for surprise button click - plays music and navigates
+  const handleSurpriseClick = () => {
+    // Ensure music is playing before navigating
+    if (audioRef.current && !isPlaying) {
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((e) => {
+          console.warn("Play failed:", e);
+        });
+    }
+    navigateTo("surprise");
+  };
+
+  return (
+    <div className="relative w-screen min-h-screen bg-gradient-to-br from-rose-100 via-pink-200 to-rose-300 overflow-hidden pt-20 pb-20">
+      {/* 🎵 Background Music */}
+      <audio
+        ref={audioRef}
+        loop
+        preload="auto"
+        onEnded={() => setIsPlaying(false)}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+      >
+        <source src="/romantic-music.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+
+      {/* Music Controls - Fixed position */}
+      <motion.div
+        className="fixed top-24 right-6 z-50 flex gap-2"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1, duration: 0.5 }}
+      >
+        <button
+          onClick={togglePlayPause}
+          className="bg-white/20 backdrop-blur-md border border-pink-300/50 rounded-full p-3 hover:bg-white/30 transition-all duration-300 shadow-lg"
+          title={isPlaying ? "Pause Music" : "Play Music"}
+        >
+          {isPlaying ? (
+            <Pause className="text-pink-600" size={20} />
+          ) : (
+            <Play className="text-pink-600" size={20} />
+          )}
+        </button>
+
+        <button
+          onClick={toggleMute}
+          className="bg-white/20 backdrop-blur-md border border-pink-300/50 rounded-full p-3 hover:bg-white/30 transition-all duration-300 shadow-lg"
+          title={isMuted ? "Unmute Music" : "Mute Music"}
+        >
+          {isMuted ? (
+            <VolumeX className="text-pink-600" size={20} />
+          ) : (
+            <Volume2 className="text-pink-600" size={20} />
+          )}
+        </button>
+      </motion.div>
+
+      {/* 🌹 Rose Petals */}
+      {rosePetals}
+
+      {/* 💗 Floating Hearts */}
+      {floatingHearts}
+
+      {/* Navigation bar */}
+      <Navigation navigateTo={navigateTo} />
+
+      {/* 💌 Love Letter Container */}
+      <motion.div
+        className="relative max-w-5xl mx-auto bg-white/20 backdrop-blur-2xl border border-pink-300/50 rounded-3xl shadow-2xl p-8 sm:p-14 z-10"
+        initial={{ opacity: 0, scale: 0.8, y: 40 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
+        {/* Header */}
+        <div className="text-center mb-10">
+          <Mail
+            className="mx-auto text-rose-600 animate-pulse drop-shadow-xl"
+            size={48}
+          />
+          <h1 className="text-4xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-500 mt-4 animate-fade-in">
+            💌 To My Sweetest Suddi 💌
           </h1>
         </div>
 
-        <div className="space-y-4 sm:space-y-6 text-gray-800 leading-relaxed text-sm sm:text-xl">
-          <p className="font-semibold animate-fade-in">
-            My Dearest {loginData.name},
+        {/* Letter Body */}
+        <motion.div
+          className="space-y-6 text-gray-800 leading-loose text-base sm:text-xl px-4 sm:px-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+        >
+          <p className="font-semibold">My Dearest Suddi (Dewmi Oshadi),</p>
+
+          <p>
+            Today, the world celebrates the most precious soul it's ever known —{" "}
+            <strong>you</strong>. 💖 On this beautiful day, I just want to hold
+            your heart a little closer and remind you how deeply I adore you.
           </p>
 
-          <p className="animate-fade-in delay-200">
-            Today, your birthday fills my heart with joy! You’re my sunshine, my
-            strength, my everything. 🎉
+          <p>
+            You are the melody in my silence, the sparkle in my skies, and the
+            warmth in my every breath. Your laughter is my favorite symphony,
+            and your smile — oh love — it's the light that guides my soul. ✨
           </p>
 
-          <p className="animate-fade-in delay-400">
-            Your smile lights my world, and your love makes every day a dream.
-            I’m so blessed to have you.
+          <p>
+            Every moment with you feels like a fairytale I never want to end.
+            From your sleepy cuddles to your dreamy giggles, every piece of you
+            is etched into my heart like a love poem written by the stars. 🌙
           </p>
 
-          <p className="animate-fade-in delay-600">
-            I cherish your laughter, your spirit, and even your sleepy cuddles.
-            You’re my perfect love.
+          <p>
+            I thank the universe every single day for blessing me with you — my
+            heart's home, my forever girl. I promise to stand beside you, to
+            lift you up when you're down, and to turn life into a beautiful
+            adventure together. 🌹
           </p>
 
-          <p className="animate-fade-in delay-800">
-            I promise to love you forever, support your dreams, and make every
-            moment magical for you.
+          <p className="text-lg sm:text-2xl font-bold text-pink-600">
+            Happy Birthday, my beautiful Suddi! You're not just my girlfriend —{" "}
+            you are my muse, my light, my forever. 💕
           </p>
 
-          <p className="text-lg sm:text-2xl font-bold animate-fade-in delay-1000">
-            Happy Birthday, my soulmate! To our endless love! 💕
-          </p>
-
-          <p className="text-right text-lg sm:text-2xl animate-fade-in delay-1200">
-            Yours forever,
+          <p className="text-right text-lg sm:text-2xl">
+            Forever yours,
             <br />
-            <span className="font-bold">Your eternal love ❤️</span>
+            <span className="font-bold text-rose-600">
+              With all my love, Buddhi ❤️
+            </span>
           </p>
-        </div>
+        </motion.div>
 
-        <div className="mt-6 sm:mt-8 text-center">
+        {/* Music Status Indicator */}
+        <motion.div
+          className="mt-6 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2 }}
+        >
+          <p className="text-pink-600 text-sm flex items-center justify-center gap-2">
+            <Volume2 size={16} />
+            {isPlaying ? "Playing romantic music..." : "Music paused"}
+          </p>
+        </motion.div>
+
+        {/* Surprise Button */}
+        <motion.div
+          className="mt-10 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5 }}
+        >
           <button
-            onClick={() => navigateTo("surprise")}
-            className="bg-gradient-to-r from-red-600 to-pink-600 text-rose-100 px-6 sm:px-12 py-2 sm:py-5 rounded-full text-base sm:text-2xl font-bold hover:shadow-xl transition-all duration-300 animate-pulse"
+            onClick={handleSurpriseClick}
+            className="bg-gradient-to-r from-pink-600 to-red-600 hover:from-red-600 hover:to-pink-600 text-white px-8 sm:px-14 py-3 sm:py-5 rounded-full text-lg sm:text-2xl font-bold shadow-xl hover:shadow-pink-300 transition-all duration-300 transform hover:scale-105"
           >
             Ready for a Surprise? 🎁
           </button>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
+
+      {/* Additional CSS for petals animation */}
+      <style>{`
+        @keyframes fall {
+          0% {
+            transform: translateY(-10vh) rotate(0deg);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(110vh) rotate(360deg);
+            opacity: 0;
+          }
+        }
+        .petal {
+          animation-name: fall;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fade-in {
+          animation: fade-in 1s ease-out;
+        }
+      `}</style>
     </div>
-    {[...Array(5)].map((_, i) => (
-      <div
-        key={i}
-        className="heart"
-        style={{
-          left: `${Math.random() * 100}vw`,
-          top: `${Math.random() * 100}vh`,
-          animationDelay: `${i * 1.5}s`,
-        }}
-      />
-    ))}
-  </div>
-);
+  );
+};
 
 export default LoveLetter;
