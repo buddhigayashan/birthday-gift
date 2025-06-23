@@ -30,6 +30,7 @@ const VoiceProtectedGallery = ({ navigateTo }) => {
   const [voiceText, setVoiceText] = useState("");
   const [authAttempts, setAuthAttempts] = useState(0);
   const [showRetry, setShowRetry] = useState(false);
+  const [showReturnButton, setShowReturnButton] = useState(false);
 
   // Gallery states
   const [isPlaying, setIsPlaying] = useState(false);
@@ -96,6 +97,12 @@ const VoiceProtectedGallery = ({ navigateTo }) => {
       };
     }
   }, []);
+
+  useEffect(() => {
+    if (authAttempts >= 3) {
+      setShowReturnButton(true);
+    }
+  }, [authAttempts]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -290,8 +297,9 @@ const VoiceProtectedGallery = ({ navigateTo }) => {
 
                 <div className="mb-6">
                   <div className="bg-black/20 rounded-2xl p-4 mb-4">
-                    <p className="text-white/60 text-sm mb-2">Try saying a special phrase...</p>
-                    {/* Removed the div that displayed the phrases */}
+                    <p className="text-white/60 text-sm mb-2">
+                      Try saying a special phrase...
+                    </p>
                   </div>
 
                   {voiceText && (
@@ -334,6 +342,15 @@ const VoiceProtectedGallery = ({ navigateTo }) => {
                       className="w-full mt-3 py-2 bg-white/20 hover:bg-white/30 text-white rounded-xl transition-colors"
                     >
                       Try Again
+                    </button>
+                  )}
+
+                  {showReturnButton && (
+                    <button
+                      onClick={() => navigateTo("welcome")}
+                      className="w-full mt-3 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-xl transition-colors"
+                    >
+                      Return to Welcome Page
                     </button>
                   )}
                 </div>
@@ -502,7 +519,7 @@ const VoiceProtectedGallery = ({ navigateTo }) => {
                     }`}
                   >
                     {currentPhotoIndex === index && (
-                        <div className="absolute -inset-1 bg-gradient-to-r from-pink-400 to-purple-400 rounded-3xl blur opacity-30 animate-pulse"></div>
+                      <div className="absolute -inset-1 bg-gradient-to-r from-pink-400 to-purple-400 rounded-3xl blur opacity-30 animate-pulse"></div>
                     )}
 
                     <div className="relative aspect-square rounded-2xl overflow-hidden mb-2 sm:mb-4 shadow-lg">
@@ -532,7 +549,7 @@ const VoiceProtectedGallery = ({ navigateTo }) => {
                           size={32}
                           fill="currentColor"
                         />
-                        </div>
+                      </div>
                     </div>
 
                     <p className="text-center text-white font-semibold text-sm sm:text-lg animate-pulse">
@@ -546,11 +563,13 @@ const VoiceProtectedGallery = ({ navigateTo }) => {
             <FloatingElement delay={1.5}>
               <div className="mt-6 sm:mt-12 bg-white/10 backdrop-blur-2xl rounded-3xl p-4 sm:p-10 shadow-2xl border-2 border-white/30 max-w-4xl mx-auto hover:bg-white/15 transition-all duration-500">
                 <p className="text-white text-sm sm:text-xl italic animate-pulse">
-                  Every photo p with you is a treasure. These memories are priceless! 💝
+                  Every photo with you is a treasure. These memories are
+                  priceless! 💝
                 </p>
                 <button
                   onClick={() => navigateTo("letter")}
-                  className="mt-4 sm:mt-6 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-6 sm:px-6 sm:p-12 py-2 sm:py-5 rounded-full text-base sm:text-2xl font-bold shadow-xl hover:shadow-2xl transition-all duration-300 animate-pulse hover:scale-105 border-2 border-white/30">
+                  className="mt-4 sm:mt-6 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-6 sm:px-6 sm:p-12 py-2 sm:py-5 rounded-full text-base sm:text-2xl font-bold shadow-xl hover:shadow-2xl transition-all duration-300 animate-pulse hover:scale-105 border-2 border-white/30"
+                >
                   Read My Love Letter 💝
                 </button>
               </div>
