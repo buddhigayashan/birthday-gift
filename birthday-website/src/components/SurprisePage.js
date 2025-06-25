@@ -1,107 +1,71 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  Gift,
-  Heart,
-  Sparkles,
-  Video,
-  ArrowLeft,
-  Play,
-  Pause,
-  SkipForward,
-  SkipBack,
-} from "lucide-react";
+import { Gift, Heart, Sparkles, Video, ArrowLeft, X } from "lucide-react";
 import Navigation from "./Navigation";
+ 
 
+
+ 
 const SurprisePage = ({ navigateTo }) => {
   const [showGiftBoxes, setShowGiftBoxes] = useState(false);
   const [selectedBox, setSelectedBox] = useState(null);
   const [showShoes, setShowShoes] = useState(false);
   const [boxOpened, setBoxOpened] = useState(false);
-  const [currentSong, setCurrentSong] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const audioRef = useRef(null);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [dewDrops, setDewDrops] = useState([]);
+  const [heartFormed, setHeartFormed] = useState(false);
+  const videoRef = useRef(null);
   const correctBox = 1;
 
-  const playlist = [
-    {
-      title: "Kiyannata Beri",
-      artist: "Tharam Dushyanth Weeraman",
-      file: "/kiyannata-beri-tharam-dushyanth-weeraman.mp3",
-    },
-    {
-      title: "Penena Thek Mane",
-      artist: "Samith Sirimanna",
-      file: "/penena-thek-mane-samith-sirimanna.mp3",
-    },
-    {
-      title: "Sulagak Wela Oba Soya Enna One",
-      artist: "Shihan Mihiranga",
-      file: "/Sulagak-Wela-Oba-Soya-Enna-One-Shihan-Mihiranga-www.song.lk.mp3",
-    },
-  ];
-
+  // Generate dew drops with heart formation logic
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.addEventListener("loadedmetadata", () => {
-        setDuration(audioRef.current.duration);
-      });
-      audioRef.current.addEventListener("timeupdate", () => {
-        setCurrentTime(audioRef.current.currentTime);
-      });
-      audioRef.current.addEventListener("ended", nextSong);
-    }
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
+    const generateDewDrops = () => {
+      const drops = [];
+      const numDrops = 60; // Reduced for better visibility
+
+      // Heart shape equation: x² + (y - √|x|)² = 1 (scaled and positioned)
+      const heartPoints = [];
+      for (let t = 0; t <= 2 * Math.PI; t += 0.15) {
+        const x = 16 * Math.sin(t) ** 3;
+        const y = -(
+          13 * Math.cos(t) -
+          5 * Math.cos(2 * t) -
+          2 * Math.cos(3 * t) -
+          Math.cos(4 * t)
+        );
+        heartPoints.push({ x: x * 2.5 + 50, y: y * 1.8 + 45 }); // Scale and center better
       }
+
+      for (let i = 0; i < numDrops; i++) {
+        const targetPoint =
+          heartPoints[Math.floor(Math.random() * heartPoints.length)];
+        drops.push({
+          id: i,
+          startX: Math.random() * 100,
+          startY: -10,
+          targetX: targetPoint.x,
+          targetY: targetPoint.y,
+          delay: Math.random() * 2000, // Reduced delay for faster start
+          duration: 3000 + Math.random() * 1000, // Slower for better visibility
+          size: 6 + Math.random() * 8, // Larger drops
+          opacity: 0.8 + Math.random() * 0.2, // More visible
+        });
+      }
+      setDewDrops(drops);
+
+      // Form heart after drops fall
+      setTimeout(() => {
+        setHeartFormed(true);
+      }, 5000); // Extended time to see the process
     };
+
+    generateDewDrops();
   }, []);
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.src = playlist[currentSong].file;
-      audioRef.current.load();
-      if (isPlaying) {
-        audioRef.current.play().catch(() => {});
-      }
+    if (showVideoModal && videoRef.current) {
+      videoRef.current.play().catch(() => {});
     }
-  }, [currentSong]);
-
-  const togglePlayPause = async () => {
-    if (!audioRef.current) return;
-    try {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        await audioRef.current.play();
-        setIsPlaying(true);
-      }
-    } catch (error) {
-      console.log("Audio playback error:", error);
-    }
-  };
-
-  const nextSong = () => {
-    setCurrentSong((prev) => (prev + 1) % playlist.length);
-  };
-
-  const prevSong = () => {
-    setCurrentSong((prev) => (prev - 1 + playlist.length) % playlist.length);
-  };
-
-  const selectSong = (index) => {
-    setCurrentSong(index);
-    setIsPlaying(true);
-  };
-
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-  };
+  }, [showVideoModal]);
 
   const handleGiftClick = () => {
     setShowGiftBoxes(true);
@@ -129,6 +93,17 @@ const SurprisePage = ({ navigateTo }) => {
     setBoxOpened(false);
   };
 
+  const openVideoModal = () => {
+    setShowVideoModal(true);
+  };
+
+  const closeVideoModal = () => {
+    setShowVideoModal(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
   const FloatingParticle = () => (
     <div className="fixed inset-0 pointer-events-none">
       {[...Array(20)].map((_, i) => (
@@ -150,13 +125,166 @@ const SurprisePage = ({ navigateTo }) => {
           style={{
             left: `${Math.random() * 100}vw`,
             top: `${Math.random() * 100}vh`,
-            animation: `float-heart ${4 + Math.random() * 3}s ease-in-out infinite`,
+            animation: `float-heart ${
+              4 + Math.random() * 3
+            }s ease-in-out infinite`,
             animationDelay: `${i * 1.5}s`,
           }}
         >
           <Heart size={20 + Math.random() * 20} fill="currentColor" />
         </div>
       ))}
+    </div>
+  );
+
+  // Dew Drops Animation Component
+  const DewDropsHeart = () => (
+    <div className="fixed inset-0 pointer-events-none z-20 overflow-hidden">
+      {dewDrops.map((drop) => (
+        <div
+          key={drop.id}
+          className="absolute rounded-full bg-gradient-to-br from-cyan-300 via-blue-300 to-cyan-400 shadow-2xl dewdrop"
+          style={{
+            width: `${drop.size}px`,
+            height: `${drop.size}px`,
+            left: `${drop.startX}%`,
+            top: `${drop.startY}%`,
+            opacity: drop.opacity,
+            boxShadow:
+              "0 0 15px rgba(0, 191, 255, 0.8), inset 0 0 8px rgba(255, 255, 255, 0.9), 0 0 25px rgba(173, 216, 230, 0.6)",
+            animation: `dewfall-${drop.id} ${drop.duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94) ${drop.delay}ms forwards`,
+            border: "1px solid rgba(255, 255, 255, 0.3)",
+          }}
+        />
+      ))}
+
+      {heartFormed && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="heart-pulse">
+            <Heart
+              size={150}
+              className="text-pink-400 drop-shadow-2xl"
+              fill="currentColor"
+              style={{
+                filter:
+                  "drop-shadow(0 0 30px rgba(255, 20, 147, 1)) drop-shadow(0 0 60px rgba(255, 105, 180, 0.8))",
+                animation: "heartbeat 2s ease-in-out infinite",
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        ${dewDrops
+          .map(
+            (drop) => `
+          @keyframes dewfall-${drop.id} {
+            0% {
+              transform: translateY(0) rotate(0deg) scale(0.5);
+              opacity: 0;
+            }
+            15% {
+              opacity: ${drop.opacity};
+              transform: translateY(10vh) rotate(30deg) scale(1);
+            }
+            70% {
+              transform: translateY(40vh) rotate(180deg) scale(1);
+              opacity: ${drop.opacity};
+            }
+            85% {
+              transform: translate(${(drop.targetX - drop.startX) * 0.7}vw, ${
+              drop.targetY * 0.8
+            }vh) rotate(270deg) scale(1.2);
+              opacity: 1;
+            }
+            100% {
+              transform: translate(${drop.targetX - drop.startX}vw, ${
+              drop.targetY
+            }vh) rotate(360deg) scale(1.5);
+              opacity: 1;
+              box-shadow: 0 0 25px rgba(0, 191, 255, 1), inset 0 0 15px rgba(255, 255, 255, 1), 0 0 40px rgba(173, 216, 230, 0.8);
+            }
+          }
+        `
+          )
+          .join("")}
+
+        @keyframes heartbeat {
+          0%,
+          100% {
+            transform: scale(1);
+            filter: drop-shadow(0 0 30px rgba(255, 20, 147, 1))
+              drop-shadow(0 0 60px rgba(255, 105, 180, 0.8));
+          }
+          50% {
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 50px rgba(255, 20, 147, 1))
+              drop-shadow(0 0 80px rgba(255, 105, 180, 1));
+          }
+        }
+
+        .dewdrop {
+          position: relative;
+          backdrop-filter: blur(1px);
+        }
+
+        .dewdrop::before {
+          content: "";
+          position: absolute;
+          top: 15%;
+          left: 25%;
+          width: 40%;
+          height: 40%;
+          background: radial-gradient(
+            circle at 30% 30%,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 0.3) 70%,
+            transparent 100%
+          );
+          border-radius: 50%;
+        }
+
+        .dewdrop::after {
+          content: "";
+          position: absolute;
+          top: 60%;
+          left: 60%;
+          width: 20%;
+          height: 20%;
+          background: rgba(255, 255, 255, 0.6);
+          border-radius: 50%;
+          filter: blur(0.5px);
+        }
+
+        .heart-pulse {
+          animation: heartPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes heartPulse {
+          0%,
+          100% {
+            transform: scale(1) rotate(0deg);
+            filter: drop-shadow(0 0 30px rgba(255, 20, 147, 1))
+              drop-shadow(0 0 60px rgba(255, 105, 180, 0.8));
+          }
+          25% {
+            transform: scale(1.1) rotate(-2deg);
+            filter: drop-shadow(0 0 40px rgba(255, 20, 147, 1))
+              drop-shadow(0 0 70px rgba(255, 105, 180, 0.9));
+          }
+          50% {
+            transform: scale(1.2) rotate(0deg);
+            filter: drop-shadow(0 0 50px rgba(255, 20, 147, 1))
+              drop-shadow(0 0 80px rgba(255, 105, 180, 1));
+          }
+          75% {
+            transform: scale(1.1) rotate(2deg);
+            filter: drop-shadow(0 0 40px rgba(255, 20, 147, 1))
+              drop-shadow(0 0 70px rgba(255, 105, 180, 0.9));
+          }
+        }
+      `}</style>
     </div>
   );
 
@@ -206,7 +334,7 @@ const SurprisePage = ({ navigateTo }) => {
                 onClick={() => navigateTo("wishes")}
                 className="bg-gradient-to-r from-orange-600 to-red-600 text-white px-6 py-3 rounded-full font-bold hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
-                Watch Wishes Video 🎬
+                See Wishes 🎂
               </button>
             </div>
           </div>
@@ -248,7 +376,9 @@ const SurprisePage = ({ navigateTo }) => {
                         ? "from-purple-400 to-indigo-500"
                         : "from-blue-400 to-cyan-500"
                     } p-6 rounded-3xl shadow-2xl border-2 border-white/30 ${
-                      selectedBox === boxIndex && boxOpened ? "animate-pulse" : ""
+                      selectedBox === boxIndex && boxOpened
+                        ? "animate-pulse"
+                        : ""
                     }`}
                   >
                     <Gift
@@ -294,9 +424,9 @@ const SurprisePage = ({ navigateTo }) => {
         />
       </div>
       <FloatingParticle />
-      <audio ref={audioRef} preload="metadata" />
+      <DewDropsHeart />
       <Navigation navigateTo={navigateTo} />
-      <div className="relative z-10 pt-24 pb-20 px-4">
+      <div className="relative z-30 pt-24 pb-20 px-4">
         <div className="max-w-5xl mx-auto text-center">
           <div className="mb-8 animate-bounce">
             <Gift className="mx-auto text-yellow-400" size={64} />
@@ -305,10 +435,11 @@ const SurprisePage = ({ navigateTo }) => {
             🎁 Surprise, My Love! 🎁
           </h1>
           <p className="text-lg text-white/80 mb-12 max-w-2xl mx-auto">
-            A special gift awaits you! Explore the surprises crafted with all my love. 💖
+            A special gift awaits you! Explore the surprises crafted with all my
+            love. 💖
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12 max-w-4xl mx-auto">
             <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 border border-white/20 hover:scale-105">
               <Video className="mx-auto text-purple-400 mb-4" size={48} />
               <h3 className="text-xl font-bold text-white mb-2">
@@ -318,7 +449,7 @@ const SurprisePage = ({ navigateTo }) => {
                 A heartfelt video message just for you!
               </p>
               <button
-                onClick={() => navigateTo("wishes")}
+                onClick={openVideoModal}
                 className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-full font-bold hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
                 Watch Now 🎬
@@ -341,111 +472,115 @@ const SurprisePage = ({ navigateTo }) => {
             </div>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 shadow-2xl border border-white/20">
-            <h3 className="text-2xl font-bold text-white mb-6 flex items-center justify-center gap-2">
-              🎵 Our Love Playlist
+          <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20 max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
+              💝 Made with Love
               <Heart className="text-pink-400 animate-pulse" size={24} />
             </h3>
-            <div className="bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-2xl p-4 mb-6 border border-white/20">
-              <h4 className="text-lg font-bold text-white mb-2">Now Playing:</h4>
-              <p className="text-base text-pink-300 font-semibold">
-                {playlist[currentSong].title}
+            <p className="text-lg text-white/90 leading-relaxed">
+              Watch as the dewdrops of my love fall from heaven and come
+              together to form the heart that beats only for you. Each drop
+              represents a moment we've shared, a laugh we've had, and a dream
+              we'll make come true together.
+            </p>
+            <div className="mt-6 p-4 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-xl border border-white/20">
+              <p className="text-sm text-pink-200 italic">
+                "Like dewdrops that shimmer in the morning light, my love for
+                you sparkles eternal and bright." ✨
               </p>
-              <p className="text-sm text-white/70">
-                {playlist[currentSong].artist}
-              </p>
-              <div className="mt-4">
-                <div className="flex justify-between text-sm text-white/70 mb-2">
-                  <span>{formatTime(currentTime)}</span>
-                  <span>{formatTime(duration)}</span>
-                </div>
-                <div className="w-full bg-white/20 rounded-full h-2">
-                  <div
-                    className="bg-gradient-to-r from-pink-400 to-purple-400 h-2 rounded-full"
-                    style={{
-                      width: `${duration ? (currentTime / duration) * 100 : 0}%`,
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="flex justify-center gap-4 mb-6">
-              <button
-                onClick={prevSong}
-                className="p-2 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full text-white hover:shadow-lg transition-all duration-300 hover:scale-110"
-              >
-                <SkipBack size={20} />
-              </button>
-              <button
-                onClick={togglePlayPause}
-                className="p-3 bg-gradient-to-r from-pink-600 to-red-600 rounded-full text-white hover:shadow-xl transition-all duration-300 hover:scale-110"
-              >
-                {isPlaying ? <Pause size={24} /> : <Play size={24} />}
-              </button>
-              <button
-                onClick={nextSong}
-                className="p-2 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full text-white hover:shadow-lg transition-all duration-300 hover:scale-110"
-              >
-                <SkipForward size={20} />
-              </button>
-            </div>
-            <div className="grid grid-cols-1 gap-4">
-              {playlist.map((song, index) => (
-                <div
-                  key={index}
-                  onClick={() => selectSong(index)}
-                  className={`cursor-pointer p-4 rounded-xl transition-all duration-300 hover:scale-105 border ${
-                    currentSong === index
-                      ? "bg-gradient-to-r from-pink-500/30 to-purple-500/30 border-pink-400"
-                      : "bg-white/10 border-white/20 hover:border-white/40"
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    {currentSong === index && isPlaying ? (
-                      <div className="w-3 h-3 bg-pink-400 rounded-full animate-pulse" />
-                    ) : (
-                      <div className="w-3 h-3 bg-white/40 rounded-full" />
-                    )}
-                    <div>
-                      <p className="text-sm font-semibold text-white">
-                        {song.title}
-                      </p>
-                      <p className="text-xs text-white/70">{song.artist}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
       </div>
+
+      {showVideoModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4 sm:px-0">
+          <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-4 sm:p-6 max-w-3xl w-full">
+            <button
+              onClick={closeVideoModal}
+              className="absolute top-4 right-4 text-white hover:text-pink-400 transition-all duration-300 z-10"
+            >
+              <X size={24} />
+            </button>
+            <video
+              ref={videoRef}
+              src="/wishes-video.mp4"
+              controls
+              className="w-full max-w-full h-auto max-h-[80vh] rounded-2xl object-contain"
+              autoPlay
+            />
+          </div>
+        </div>
+      )}
+
       <style jsx>{`
         @keyframes gradient-shift {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.8; }
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.8;
+          }
         }
         @keyframes float-particle {
-          0% { transform: translateY(0px); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(-100vh); opacity: 0; }
+          0% {
+            transform: translateY(0px);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-100vh);
+            opacity: 0;
+          }
         }
         @keyframes float-heart {
-          0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
-          50% { transform: translateY(-50px) scale(1.2); opacity: 1; }
+          0%,
+          100% {
+            transform: translateY(0) scale(1);
+            opacity: 0.6;
+          }
+          50% {
+            transform: translateY(-50px) scale(1.2);
+            opacity: 1;
+          }
         }
         @keyframes fade-in {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
         @keyframes pulse {
-          0%, 100% { opacity: 0.6; }
-          50% { opacity: 0.8; }
+          0%,
+          100% {
+            opacity: 0.6;
+          }
+          50% {
+            opacity: 0.8;
+          }
         }
-        .animate-gradient-shift { animation: gradient-shift 4s ease-in-out infinite; }
-        .animate-float-particle { animation: float-particle 8s linear infinite; }
-        .animate-fade-in { animation: fade-in 1s ease-out; }
-        .animate-pulse { animation: pulse 2s ease-in-out infinite; }
+        .animate-gradient-shift {
+          animation: gradient-shift 4s ease-in-out infinite;
+        }
+        .animate-float-particle {
+          animation: float-particle 8s linear infinite;
+        }
+        .animate-fade-in {
+          animation: fade-in 1s ease-out;
+        }
+        .animate-pulse {
+          animation: pulse 2s ease-in-out infinite;
+        }
       `}</style>
     </div>
   );
