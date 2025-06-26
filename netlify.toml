@@ -1,0 +1,4 @@
+[build]
+  base = "birthday-website"
+  publish = "build"
+  command = "npm run build"
