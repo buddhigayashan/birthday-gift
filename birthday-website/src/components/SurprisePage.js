@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Gift, Heart, Sparkles, Video, ArrowLeft, X } from "lucide-react";
+
 import Navigation from "./Navigation";
- 
 
-
- 
 const SurprisePage = ({ navigateTo }) => {
   const [showGiftBoxes, setShowGiftBoxes] = useState(false);
   const [selectedBox, setSelectedBox] = useState(null);
@@ -20,7 +18,7 @@ const SurprisePage = ({ navigateTo }) => {
   useEffect(() => {
     const generateDewDrops = () => {
       const drops = [];
-      const numDrops = 60; // Reduced for better visibility
+      const numDrops = 60;
 
       // Heart shape equation: x² + (y - √|x|)² = 1 (scaled and positioned)
       const heartPoints = [];
@@ -32,7 +30,7 @@ const SurprisePage = ({ navigateTo }) => {
           2 * Math.cos(3 * t) -
           Math.cos(4 * t)
         );
-        heartPoints.push({ x: x * 2.5 + 50, y: y * 1.8 + 45 }); // Scale and center better
+        heartPoints.push({ x: x * 2.5 + 50, y: y * 1.8 + 45 });
       }
 
       for (let i = 0; i < numDrops; i++) {
@@ -44,10 +42,10 @@ const SurprisePage = ({ navigateTo }) => {
           startY: -10,
           targetX: targetPoint.x,
           targetY: targetPoint.y,
-          delay: Math.random() * 2000, // Reduced delay for faster start
-          duration: 3000 + Math.random() * 1000, // Slower for better visibility
-          size: 6 + Math.random() * 8, // Larger drops
-          opacity: 0.8 + Math.random() * 0.2, // More visible
+          delay: Math.random() * 2000,
+          duration: 3000 + Math.random() * 1000,
+          size: 6 + Math.random() * 8,
+          opacity: 0.8 + Math.random() * 0.2,
         });
       }
       setDewDrops(drops);
@@ -55,7 +53,7 @@ const SurprisePage = ({ navigateTo }) => {
       // Form heart after drops fall
       setTimeout(() => {
         setHeartFormed(true);
-      }, 5000); // Extended time to see the process
+      }, 5000);
     };
 
     generateDewDrops();
@@ -288,6 +286,71 @@ const SurprisePage = ({ navigateTo }) => {
     </div>
   );
 
+  // Central Heart Component - NEW ADDITION
+  const CentralHeart = () => (
+    <div className="flex justify-center items-center my-16 relative z-30">
+      <div className="relative">
+        {/* Animated rings around the heart */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-32 h-32 border-2 border-pink-400/30 rounded-full animate-ping"></div>
+        </div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-40 h-40 border border-purple-400/20 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+        </div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-48 h-48 border border-red-400/10 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </div>
+        
+        {/* Main heart */}
+        <div className="relative z-10 bg-gradient-to-br from-pink-500/20 to-red-500/20 backdrop-blur-xl rounded-full p-8 border border-pink-400/30 shadow-2xl">
+          <Heart 
+            size={120} 
+            className="text-pink-400 animate-pulse drop-shadow-2xl mx-auto" 
+            fill="currentColor"
+            style={{
+              filter: "drop-shadow(0 0 40px rgba(255, 20, 147, 0.8)) drop-shadow(0 0 80px rgba(255, 105, 180, 0.6))",
+              animation: "central-heartbeat 3s ease-in-out infinite"
+            }}
+          />
+        </div>
+        
+        {/* Floating hearts around the central heart */}
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute text-pink-300 pointer-events-none"
+            style={{
+              left: `${50 + 60 * Math.cos((i * Math.PI * 2) / 6)}%`,
+              top: `${50 + 60 * Math.sin((i * Math.PI * 2) / 6)}%`,
+              transform: 'translate(-50%, -50%)',
+              animation: `orbit-heart 8s linear infinite`,
+              animationDelay: `${i * 1.3}s`
+            }}
+          >
+            <Heart size={16} fill="currentColor" />
+          </div>
+        ))}
+      </div>
+      
+      {/* Sparkles around the heart */}
+      {[...Array(12)].map((_, i) => (
+        <div
+          key={`sparkle-${i}`}
+          className="absolute text-yellow-400 pointer-events-none"
+          style={{
+            left: `${50 + 80 * Math.cos((i * Math.PI * 2) / 12)}%`,
+            top: `${50 + 80 * Math.sin((i * Math.PI * 2) / 12)}%`,
+            transform: 'translate(-50%, -50%)',
+            animation: `sparkle-twinkle 2s ease-in-out infinite`,
+            animationDelay: `${i * 0.2}s`
+          }}
+        >
+          <Sparkles size={12} />
+        </div>
+      ))}
+    </div>
+  );
+
   if (showShoes) {
     return (
       <div className="min-h-screen relative overflow-hidden">
@@ -308,12 +371,9 @@ const SurprisePage = ({ navigateTo }) => {
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
                 Your Perfect Gift! 👠✨
               </h2>
-              <img
-                src="/shoes.jpg"
-                alt="Beautiful shoes"
-                className="mx-auto rounded-2xl shadow-xl max-w-xs w-full mb-6 object-cover"
-                style={{ maxHeight: "300px" }}
-              />
+              <div className="mx-auto rounded-2xl shadow-xl max-w-xs w-full mb-6 bg-gradient-to-br from-pink-200 to-purple-200 p-8 flex items-center justify-center" style={{ height: "300px" }}>
+                <div className="text-6xl">👠</div>
+              </div>
               <div className="bg-gradient-to-r from-pink-500/20 to-purple-500/20 p-4 rounded-2xl border border-white/20">
                 <p className="text-lg font-semibold text-white mb-2">
                   Elegant shoes for my queen! 👑
@@ -438,6 +498,9 @@ const SurprisePage = ({ navigateTo }) => {
             A special gift awaits you! Explore the surprises crafted with all my
             love. 💖
           </p>
+
+          {/* NEW: Central Heart Section */}
+          <CentralHeart />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12 max-w-4xl mx-auto">
             <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 border border-white/20 hover:scale-105">
@@ -569,6 +632,34 @@ const SurprisePage = ({ navigateTo }) => {
             opacity: 0.8;
           }
         }
+        @keyframes central-heartbeat {
+          0%, 100% {
+            transform: scale(1);
+            filter: drop-shadow(0 0 40px rgba(255, 20, 147, 0.8)) drop-shadow(0 0 80px rgba(255, 105, 180, 0.6));
+          }
+          50% {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 60px rgba(255, 20, 147, 1)) drop-shadow(0 0 100px rgba(255, 105, 180, 0.8));
+          }
+        }
+        @keyframes orbit-heart {
+          0% {
+            transform: translate(-50%, -50%) rotate(0deg) translateX(60px) rotate(0deg);
+          }
+          100% {
+            transform: translate(-50%, -50%) rotate(360deg) translateX(60px) rotate(-360deg);
+          }
+        }
+        @keyframes sparkle-twinkle {
+          0%, 100% {
+            opacity: 0.3;
+            transform: translate(-50%, -50%) scale(0.8);
+          }
+          50% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.2);
+          }
+        }
         .animate-gradient-shift {
           animation: gradient-shift 4s ease-in-out infinite;
         }
@@ -578,12 +669,12 @@ const SurprisePage = ({ navigateTo }) => {
         .animate-fade-in {
           animation: fade-in 1s ease-out;
         }
-        .animate-pulse {
-          animation: pulse 2s ease-in-out infinite;
-        }
-      `}</style>
-    </div>
-  );
-};
-
-export default SurprisePage;
+                .animate-pulse {
+                  animation: pulse 2s ease-in-out infinite;
+                }
+              `}</style>
+            </div>
+          );
+        };
+        
+        export default SurprisePage;
