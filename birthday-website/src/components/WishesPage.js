@@ -348,7 +348,8 @@ HAPPY BIRTHDAY, Mage CHUTAAAA 👑🎂❤😘 `,
             },
             {
               name: "Tharuka",
-              message: "mathuwa vishes🎂",
+              message:
+                "Happy Birthday, Dewmi! 🎉 Wishing you a day full of joy, laughter, and unforgettable moments. May this year bring you all the happiness and success you deserve! Have an amazing time celebrating! - From your friend, Tharuka 🎂",
               color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
               icon: "❤️",
             },
