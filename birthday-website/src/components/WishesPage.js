@@ -342,7 +342,11 @@ HAPPY BIRTHDAY, Mage CHUTAAAA 👑🎂❤😘 `,
             },
             {
               name: "Chandeepa",
-              message: "thadi wishes🎂",
+              message: `🎂 Happy Birthday! 🎂
+
+Wishing you the happiest birthday and a year ahead filled with joy, success, and unforgettable moments! It’s always been great getting to know you — you’re such a kind, thoughtful, and genuinely amazing person. As the girlfriend of my best friend, you’ve naturally become a wonderful part of our circle, and I truly appreciate the positive energy you bring.
+
+Hope today brings you all the love you deserve and that this year is your best one yet. Keep smiling and shining — and enjoy every second of your special day! ✨🎈💐`,
               color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
               icon: "❤️",
             },
