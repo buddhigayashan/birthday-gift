@@ -66,13 +66,7 @@ const WishesPage = ({ navigateTo }) => {
     {
       title: "dangakara-hadakari-obe-kammul ",
       artist: " BNS",
-      file: "/dangakara-hadakari-obe-kammul-sirasa-super-stars.mp3",
-    },
-
-    {
-      title: "Pini Watichcha  ",
-      artist: " Chathra Serasinghe ",
-      file: "/dPini Watichcha Chathra Serasinghe SLMIX.mp3",
+      file: "/ddangakara-hadakari-obe-kammul-sirasa-super-stars.mp3",
     },
 
     {
