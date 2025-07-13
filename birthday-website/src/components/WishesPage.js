@@ -35,6 +35,12 @@ const WishesPage = ({ navigateTo }) => {
     },
 
     {
+      title: "Mandaram Wahipoda",
+      artist: "	Centigradz",
+      file: "Pahasara_Obe_Adare_-_Mandaram_Wahipoda_Centigradz_Sarigama_lk.mp3",
+    },
+
+    {
       title: "Asa Gatena Dasa Dahasak",
       artist: "Shihan Mihiranga",
       file: "/Asa-Gatena-Dasa-Dahasak-Shihan-Mihiranga-.mp3",
