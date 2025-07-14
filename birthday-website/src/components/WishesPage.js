@@ -321,8 +321,12 @@ const WishesPage = ({ navigateTo }) => {
           {[
             {
               name: "Buddhi",
-              message:
-                "Happy Birthday, my goddess, my everything... You are the poetry my heart writes, the dream I never want to wake from. Your love intoxicates my soul. 💖",
+              message: `🎉Happy Birthday my Suddi ❤️
+
+              You mean so much to me.💖
+              
+                I’m so lucky to have you in my life. 😘  Thank you for your love 💗 , your care 👩‍❤️‍💋‍👨, and for always being by my side 🥰 .
+               💘I hope your day is full of happiness and smiles 🌹 . I will always be here for you 💞 . Love you so much. 🎂❤️`,
               color: "linear-gradient(135deg, #a18cd1, #fbc2eb, #fbc2eb)",
               icon: "💕",
             },
@@ -340,6 +344,15 @@ HAPPY BIRTHDAY, Mage CHUTAAAA 👑🎂❤😘 `,
               color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
               icon: "❤️",
             },
+
+            {
+              name: "Peshala",
+              message:
+                "You’re more than just a roommate🫂. Life’s so much better with you around  from the laughs to the late-night chats👻. I hope your birthday is filled with love, happiness, and everything you’ve been dreaming of💫. Happy Birthday nangaaa😘🎂",
+              color: "linear-gradient(135deg, #a18cd1, #fbc2eb, #fbc2eb)",
+              icon: "❤️",
+            },
+
             {
               name: "Chandeepa",
               message: `🎂 Happy Birthday! 🎂
