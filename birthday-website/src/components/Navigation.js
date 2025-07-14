@@ -9,7 +9,7 @@ const Navigation = ({ navigateTo }) => (
         Happy Birthday, My Love!
       </h1>
       <div className="flex gap-4 mt-4 sm:mt-0 flex-wrap justify-center">
-        {["welcome" , "wishes", "surprise", "memories" , "gallery", "letter"].map(
+        {["welcome" , "wishes", "letter", "memories" , "surprise","gallery" ].map(
           (page) => (
             <button
               key={page}

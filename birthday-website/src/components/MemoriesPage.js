@@ -1,7 +1,6 @@
 import React from "react";
 import Navigation from "./Navigation";
 
-// Base style for floating hearts with 3D effects
 const heartStyleBase = {
   position: "fixed",
   width: "30px",
@@ -19,12 +18,13 @@ const heartStyleBase = {
 };
 
 const MemoriesPage = ({ navigateTo }) => {
-  // Floating animated hearts with 3D rotation
+  const [showVideo, setShowVideo] = React.useState(false);
+
   const hearts = [...Array(7)].map((_, i) => {
     const left = Math.random() * 100;
     const delay = i * 1.5;
     const duration = 7 + Math.random() * 5;
-    const rotateY = Math.random() * 30 - 15; // Slight 3D rotation
+    const rotateY = Math.random() * 30 - 15;
     return (
       <div
         key={i}
@@ -54,87 +54,53 @@ const MemoriesPage = ({ navigateTo }) => {
     );
   });
 
+  const loveRain = [...Array(25)].map((_, i) => {
+    const left = Math.random() * 100;
+    const duration = 5 + Math.random() * 5;
+    const delay = Math.random() * 5;
+    return (
+      <div
+        key={`rain-${i}`}
+        className="love-drop"
+        style={{
+          left: `${left}vw`,
+          animationDuration: `${duration}s`,
+          animationDelay: `${delay}s`,
+        }}
+      />
+    );
+  });
+
   return (
     <>
       <style>{`
         @keyframes floatUp {
-          0% {
-            transform: translateY(0) rotate(-45deg) rotateY(0deg) translateZ(0);
-            opacity: 0.7;
-          }
-          50% {
-            transform: translateY(-60vh) rotate(-45deg) rotateY(20deg) translateZ(20px);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-120vh) rotate(-45deg) rotateY(0deg) translateZ(0);
-            opacity: 0;
-          }
+          0% { top: 100vh; opacity: 0.7; }
+          100% { top: -10vh; opacity: 0; }
         }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px) rotateX(-10deg); }
-          to { opacity: 1; transform: translateY(0) rotateX(0deg); }
+        @keyframes rainDown {
+          0% { top: -10vh; opacity: 0.8; }
+          100% { top: 110vh; opacity: 0; }
         }
-        @keyframes pulseBg {
-          0% { background-position: 0% 50%; }
-          100% { background-position: 200% 50%; }
-        }
-        @keyframes sparkle {
-          0%, 100% { opacity: 0; transform: scale(0.5) translateZ(0); }
-          50% { opacity: 0.8; transform: scale(1.2) translateZ(10px); }
-        }
-        .romantic-bg {
-          background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 40%, #f0c4e8 100%);
-          background-size: 300% 300%;
-          animation: pulseBg 12s ease-in-out infinite alternate;
-          min-height: 100vh;
-          position: relative;
-          overflow: hidden;
-        }
-        .sparkle {
-          position: absolute;
-          width: 6px;
-          height: 6px;
-          background: rgba(255, 255, 255, 0.8);
-          border-radius: 50%;
-          animation: sparkle 3s infinite;
-          z-index: 1;
-          filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
-        }
-        .memory-card {
-          backdrop-filter: blur(20px) saturate(150%);
-          background: rgba(255, 255, 255, 0.3);
-          border-radius: 2rem;
-          border: 2px solid rgba(255, 182, 193, 0.3);
-          box-shadow: 0 10px 40px rgba(255, 105, 180, 0.2);
-          transition: all 0.5s cubic-bezier(0.5, 1.8, 0.3, 0.8);
-          position: relative;
-          overflow: hidden;
-          animation: fadeIn 1.3s cubic-bezier(0.5, 1.8, 0.3, 0.8) both;
-          transform-style: preserve-3d;
-          perspective: 1000px;
-        }
-        .memory-card:hover {
-          transform: translateY(-10px) scale(1.05) rotateX(5deg);
-          box-shadow: 0 20px 50px rgba(255, 105, 180, 0.25);
-        }
-        .glow-title {
-          text-shadow: 0 0 20px rgba(255, 105, 180, 0.9), 0 0 40px rgba(255, 105, 180, 0.4);
-          animation: fadeIn 1.6s cubic-bezier(0.5, 1.8, 0.3, 0.8) both;
-        }
-        .pulse-button {
-          animation: fadeIn 1.7s cubic-bezier(0.5, 1.8, 0.3, 0.8) both, pulseBtn 2.5s infinite;
-          transform: translateZ(0);
-        }
-        @keyframes pulseBtn {
-          0% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.8); transform: translateZ(0); }
-          70% { box-shadow: 0 0 0 20px rgba(255, 105, 180, 0); transform: translateZ(10px); }
-          100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); transform: translateZ(0); }
+        .love-drop {
+          position: fixed;
+          top: -10vh;
+          width: 15px;
+          height: 15px;
+          background-color: rgba(255, 105, 180, 0.7);
+          transform: rotate(-45deg);
+          border-radius: 50% 50% 0 0;
+          box-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+          animation-name: rainDown;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+          z-index: 0;
+          pointer-events: none;
         }
       `}</style>
 
       <div className="romantic-bg w-screen pt-20 pb-20 min-h-[calc(100vh-8rem)]">
-        {/* Sparkle effects for dreamy background */}
+        {loveRain}
         {[...Array(10)].map((_, i) => (
           <div
             key={`sparkle-${i}`}
@@ -162,7 +128,7 @@ const MemoriesPage = ({ navigateTo }) => {
                 },
                 {
                   title: "The Moment I Asked You Out",
-                  text: `I was nervous, but your smile made it all worth it. That "yes" changed my world forever. Now, every day with you feels like a beautiful beginning. ❤️`,
+                  text: `I was nervous, but your smile made it all worth it. That \"yes\" changed my world forever. Now, every day with you feels like a beautiful beginning. ❤️`,
                   delay: "0.2s",
                 },
                 {
@@ -179,23 +145,34 @@ const MemoriesPage = ({ navigateTo }) => {
                   <h3 className="text-xl sm:text-4xl font-bold text-gray-800 mb-2 sm:mb-6">
                     {title}
                   </h3>
-                  <p
-                    className="text-gray-600 text-sm sm:text-xl leading-relaxed"
-                    style={{ animationDelay: delay }}
-                  >
+                  <p className="text-gray-600 text-sm sm:text-xl leading-relaxed">
                     {text}
                   </p>
                 </div>
               ))}
             </div>
             <div className="mt-6 sm:mt-12">
-              <button
-                onClick={() => navigateTo("gallery")}
-                className="pulse-button bg-gradient-to-r from-rose-600 to-pink-600 text-rose-100 px-6 sm:px-12 py-2 sm:py-5 rounded-full text-base sm:text-2xl font-bold hover:shadow-xl transition-all duration-300"
-                style={{ boxShadow: "0 0 25px rgba(255, 105, 180, 0.9)" }}
-              >
-                See Our Photo Gallery 📸
-              </button>
+              {showVideo ? (
+                <video
+                  controls
+                  autoPlay
+                  className="mx-auto rounded-2xl shadow-lg w-[80%] sm:w-[50%]"
+                >
+                  <source
+                    src="/WhatsApp Video 2025-07-14 at 18.32.02_5d5f9060.mp4"
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <button
+                  onClick={() => setShowVideo(true)}
+                  className="pulse-button bg-gradient-to-r from-rose-600 to-pink-600 text-rose-100 px-6 sm:px-12 py-2 sm:py-5 rounded-full text-base sm:text-2xl font-bold hover:shadow-xl transition-all duration-300"
+                  style={{ boxShadow: "0 0 25px rgba(255, 105, 180, 0.9)" }}
+                >
+                  See Short Sweet Wish Video 🎥
+                </button>
+              )}
             </div>
           </div>
         </div>
