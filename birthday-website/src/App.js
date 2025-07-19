@@ -18,7 +18,7 @@ const App = () => {
     if (
       loginData.name &&
       (loginData.password === "iloveyou" ||
-        loginData.password === "suddi")
+        loginData.password === "suddi"||loginData.password === "HappyBirthday")
     ) {
       setIsLoggedIn(true);
       setCurrentPage("welcome");
