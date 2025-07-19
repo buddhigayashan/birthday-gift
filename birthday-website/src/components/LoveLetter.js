@@ -194,28 +194,20 @@ const LoveLetter = ({ loginData, navigateTo }) => {
           <p className="font-semibold">My Dearest Suddi (Dewmi Oshadi),</p>
 
           <p>
-            Today, the world celebrates the most precious soul it's ever known —{" "}
-            <strong>you</strong>. 💖 On this beautiful day, I just want to hold
-            your heart a little closer and remind you how deeply I adore you.
+            Today is all about you. The world is lucky to have someone like <strong>
+              you</strong> in it — and I’m even luckier to have you in my life. 💖
           </p>
 
           <p>
-            You are the melody in my silence, the sparkle in my skies, and the
-            warmth in my every breath. Your laughter is my favorite symphony,
-            and your smile — oh love — it's the light that guides my soul. ✨
+           You make everything feel better — your smile, your laugh, even just being near you makes my day brighter. I don’t always have the fanciest words, but I just want you to know how much you mean to me. ✨
           </p>
 
           <p>
-            Every moment with you feels like a fairytale I never want to end.
-            From your sleepy cuddles to your dreamy giggles, every piece of you
-            is etched into my heart like a love poem written by the stars. 🌙
+            Every little moment with you — your hugs, your laughs, your sleepy face — they stay in my heart. You’re the most special part of my life, and I don’t ever want that to change. 🌙
           </p>
 
           <p>
-            I thank the universe every single day for blessing me with you — my
-            heart's home, my forever girl. I promise to stand beside you, to
-            lift you up when you're down, and to turn life into a beautiful
-            adventure together. 🌹
+            Thank you for being you. I’ll always be here — through every up and down, through everything. Let’s make this life a good one, together. 🌹
           </p>
 
           <p className="text-lg sm:text-2xl font-bold text-pink-600">
