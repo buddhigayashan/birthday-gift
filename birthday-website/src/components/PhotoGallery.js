@@ -42,7 +42,7 @@ const VoiceProtectedGallery = ({ navigateTo }) => {
   const recognitionRef = useRef(null);
 
   // Voice authentication phrases (customize these)
-  const authPhrases = ["i love you sudda", "i love you suddi", "Open this"];
+  const authPhrases = ["i love you sudda", "i love you suddi", "Show visuals","Open"];
 
   // Photo data
   const photos = [
