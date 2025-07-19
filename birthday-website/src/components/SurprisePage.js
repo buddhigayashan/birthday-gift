@@ -369,10 +369,10 @@ const SurprisePage = ({ navigateTo }) => {
             </h1>
             <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20 mb-8">
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-                Your Perfect Gift! 👠✨
+                Your Perfect Gift! ✨
               </h2>
               <div className="mx-auto rounded-2xl shadow-xl max-w-xs w-full mb-6 bg-gradient-to-br from-pink-200 to-purple-200 p-8 flex items-center justify-center" style={{ height: "300px" }}>
-                <div className="text-6xl">👠</div>
+                <div className="text-6xl">Comming Soon</div>
               </div>
               <div className="bg-gradient-to-r from-pink-500/20 to-purple-500/20 p-4 rounded-2xl border border-white/20">
                 <p className="text-lg font-semibold text-white mb-2">

@@ -345,13 +345,7 @@ HAPPY BIRTHDAY, Mage CHUTAAAA 👑🎂❤😘 `,
               icon: "❤️",
             },
 
-            {
-              name: "Peshala",
-              message:
-                "You’re more than just a roommate🫂. Life’s so much better with you around  from the laughs to the late-night chats👻. I hope your birthday is filled with love, happiness, and everything you’ve been dreaming of💫. Happy Birthday nangaaa😘🎂",
-              color: "linear-gradient(135deg, #a18cd1, #fbc2eb, #fbc2eb)",
-              icon: "❤️",
-            },
+           
 
             {
               name: "Chandeepa",
@@ -363,6 +357,14 @@ Hope today brings you all the love you deserve and that this year is your best o
               color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
               icon: "❤️",
             },
+
+  {
+              name: "Senumi",
+              message: `🎉🎂❤️May your special day be filled with joy, laughter, and everything that makes you happy!!🎂`,
+              color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
+              icon: "❤️",
+            },
+
             {
               name: "Tharuka",
               message:
@@ -376,6 +378,15 @@ Hope today brings you all the love you deserve and that this year is your best o
               color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
               icon: "❤️",
             },
+
+ {
+              name: "Peshala",
+              message:
+                "You’re more than just a roommate🫂. Life’s so much better with you around  from the laughs to the late-night chats👻. I hope your birthday is filled with love, happiness, and everything you’ve been dreaming of💫. Happy Birthday nangaaa😘🎂",
+              color: "linear-gradient(135deg, #a18cd1, #fbc2eb, #fbc2eb)",
+              icon: "❤️",
+            },
+
             {
               name: "Ojitha",
               message: `Happy Birthday, Dewmi! 🎉
