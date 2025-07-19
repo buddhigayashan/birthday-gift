@@ -28,6 +28,13 @@ const WishesPage = ({ navigateTo }) => {
       file: "/kiyannata-beri-tharam-dushyanth-weeraman.mp3",
     },
 
+{
+      title: "Numba Dakina Waraye",
+      artist: "Maduu Shanka",
+      file: "/Numba-Dakina-Waraye-Maduu-Shanka-www.song.lk.mp3",
+    },
+
+
     {
       title: "Sulagak Wela Oba Soya Enna One",
       artist: "Shihan Mihiranga",
