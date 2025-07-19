@@ -165,13 +165,18 @@ const MemoriesPage = ({ navigateTo }) => {
                   Your browser does not support the video tag.
                 </video>
               ) : (
-                <button
-                  onClick={() => setShowVideo(true)}
-                  className="pulse-button bg-gradient-to-r from-rose-600 to-pink-600 text-rose-100 px-6 sm:px-12 py-2 sm:py-5 rounded-full text-base sm:text-2xl font-bold hover:shadow-xl transition-all duration-300"
-                  style={{ boxShadow: "0 0 25px rgba(255, 105, 180, 0.9)" }}
-                >
-                  See Short Sweet Wish Video 🎥
-                </button>
+<>
+  <button
+    onClick={() => setShowVideo(true)}
+    className="pulse-button bg-gradient-to-r from-rose-600 to-pink-600 text-rose-100 px-6 sm:px-12 py-2 sm:py-5 rounded-full text-base sm:text-2xl font-bold hover:shadow-xl transition-all duration-300"
+    style={{ boxShadow: "0 0 25px rgba(255, 105, 180, 0.9)" }}
+  >
+    See Short Sweet Wish Video 🎥
+  </button>
+  <p>To enjoy the video fully, please open it in full screen.</p>
+</>
+
+
               )}
             </div>
           </div>
