@@ -376,7 +376,7 @@ const SurprisePage = ({ navigateTo }) => {
               </div>
               <div className="bg-gradient-to-r from-pink-500/20 to-purple-500/20 p-4 rounded-2xl border border-white/20">
                 <p className="text-lg font-semibold text-white mb-2">
-                  Elegant shoes for my queen! 👑
+                  Elegant ...... for my queen! 👑
                 </p>
                 <p className="text-sm text-white/80">
                   Stunning and perfect, just like you! 💕
