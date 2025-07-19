@@ -352,15 +352,8 @@ HAPPY BIRTHDAY, Mage CHUTAAAA 👑🎂❤😘 `,
               icon: "❤️",
             },
 
-            {
-              name: "Nishadi",
-              message: `Happy birthday Dew! 🧚‍♀️ May this birthday fills with happiness & blessings for u! Keep smiling as always!!!! ✨
 
-Love from Nishadi. 🫶`,
-              color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
-              icon: "❤️",
-            },
-
+            
             {
               name: "Chandeepa",
               message: `🎂 Happy Birthday! 🎂
@@ -371,6 +364,25 @@ Hope today brings you all the love you deserve and that this year is your best o
               color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
               icon: "❤️",
             },
+
+            {
+              name: "Nishadi",
+              message: `Happy birthday Dew! 🧚‍♀️ May this birthday fills with happiness & blessings for u! Keep smiling as always!!!! ✨
+
+Love from Nishadi. 🫶`,
+              color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
+              icon: "❤️",
+            },
+
+
+ {
+              name: "Tharuka",
+              message:
+                "*🎈 Another year of amazing you! Wishing you a day filled with love, laughter, and all your favorite things. Happy Birthday, Dewmi...! 🌟🎁*",
+              color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
+              icon: "❤️",
+            },
+
  {
               name: "Senumi",
               message: `🎉🎂❤️May your special day be filled with joy, laughter, and everything that makes you happy!!🎂`,
@@ -378,6 +390,16 @@ Hope today brings you all the love you deserve and that this year is your best o
               icon: "❤️",
             },
 
+
+ {
+              name: "Ojitha",
+              message: `Happy Birthday, Dewmi! 🎉
+Hope your special day is filled with joy, laughter, and all your favorite things! Wishing you a wonderful year ahead.
+Have an amazing celebration! 🎂✨
+- Ojitha`,
+              color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
+              icon: "❤️",
+            },
 
  {
               name: "Peshala",
@@ -389,27 +411,7 @@ Hope today brings you all the love you deserve and that this year is your best o
 
 
 
- 
-            {
-              name: "Tharuka",
-              message:
-                "Happy Birthday, Dewmi! 🎉 Wishing you a day full of joy, laughter, and unforgettable moments. May this year bring you all the happiness and success you deserve! Have an amazing time celebrating! - From your friend, Tharuka 🎂",
-              color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
-              icon: "❤️",
-            },
-           
 
-
-
-            {
-              name: "Ojitha",
-              message: `Happy Birthday, Dewmi! 🎉
-Hope your special day is filled with joy, laughter, and all your favorite things! Wishing you a wonderful year ahead.
-Have an amazing celebration! 🎂✨
-- Ojitha`,
-              color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
-              icon: "❤️",
-            },
           ].map((wish, i) => (
             <div
               key={i}
