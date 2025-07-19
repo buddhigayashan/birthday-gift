@@ -345,7 +345,14 @@ HAPPY BIRTHDAY, Mage CHUTAAAA 👑🎂❤😘 `,
               icon: "❤️",
             },
 
-           
+            {
+              name: "Nishadi",
+              message: `Happy birthday Dew! 🧚‍♀️ May this birthday fills with happiness & blessings for u! Keep smiling as always!!!! ✨
+
+Love from Nishadi. 🫶`,
+              color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
+              icon: "❤️",
+            },
 
             {
               name: "Chandeepa",
@@ -357,27 +364,13 @@ Hope today brings you all the love you deserve and that this year is your best o
               color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
               icon: "❤️",
             },
-
-  {
+ {
               name: "Senumi",
               message: `🎉🎂❤️May your special day be filled with joy, laughter, and everything that makes you happy!!🎂`,
               color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
               icon: "❤️",
             },
 
-            {
-              name: "Tharuka",
-              message:
-                "Happy Birthday, Dewmi! 🎉 Wishing you a day full of joy, laughter, and unforgettable moments. May this year bring you all the happiness and success you deserve! Have an amazing time celebrating! - From your friend, Tharuka 🎂",
-              color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
-              icon: "❤️",
-            },
-            {
-              name: "Nishadi",
-              message: "nishadi wishes 🎂❤️",
-              color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
-              icon: "❤️",
-            },
 
  {
               name: "Peshala",
@@ -386,6 +379,20 @@ Hope today brings you all the love you deserve and that this year is your best o
               color: "linear-gradient(135deg, #a18cd1, #fbc2eb, #fbc2eb)",
               icon: "❤️",
             },
+
+
+
+ 
+            {
+              name: "Tharuka",
+              message:
+                "Happy Birthday, Dewmi! 🎉 Wishing you a day full of joy, laughter, and unforgettable moments. May this year bring you all the happiness and success you deserve! Have an amazing time celebrating! - From your friend, Tharuka 🎂",
+              color: "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)",
+              icon: "❤️",
+            },
+           
+
+
 
             {
               name: "Ojitha",
