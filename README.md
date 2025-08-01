@@ -17,7 +17,6 @@ This digital celebration was built with care and attention to every detail to ma
 - **Photo Gallery** — Treasured memories beautifully displayed  
 - **Interactive Elements** — Fun surprises hidden throughout  
 - **Mobile Responsive** — Looks stunning on any device  
-- **Birthday Countdown** — A special timer counting down to the big day  
 - **Voice Navigation** — Control the site effortlessly with your voice  
 - **AI-Powered Interactions** — Intelligent responses for a personalized touch  
 
@@ -36,13 +35,13 @@ This digital celebration was built with care and attention to every detail to ma
 
 ## 🚀 Live Demo
 
-Check out the live website here: [Add your deployed URL here]
+Check out the live website here:https://birthday-gift-seven-xi.vercel.app/
 
 ---
 
 ## 📱 Screenshots
 
-*Add beautiful screenshots showcasing the site here.*
+.....
 
 ---
 
@@ -53,7 +52,7 @@ Check out the live website here: [Add your deployed URL here]
 - **Surprise Easter Eggs** — Hidden delights to discover  
 - **Memory Lane** — An interactive timeline capturing our journey  
 - **Voice-Controlled Navigation** — Navigate hands-free with simple commands  
-- **AI Chatbot** — Sends personalized birthday wishes and fun chats  
+ 
 
 ---
 
@@ -90,7 +89,7 @@ Made with 💖 for the most wonderful person in the world
 Happy Birthday, Beautiful! 🎂🎉
 
 📫 Contact Me
-🌐 Website: Coming Soon
+🌐 Website: buddhigayashan.netlify.app
 🔗 LinkedIn: linkedin.com/in/buddhi-jayawickrama-a82007366
 📱 Phone: 0717071306
 📧 Email: buddhigjayawickrama@gmail.com
